@@ -8,7 +8,7 @@
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
 <%--
-ㅇㅇㅇㅇ
+깃 테스트
 
  --%>
 <html>
