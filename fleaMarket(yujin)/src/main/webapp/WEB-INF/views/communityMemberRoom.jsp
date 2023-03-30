@@ -45,8 +45,11 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="${path}/assets/css/argon-dashboard.css?v=2.0.5" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <!-- room js -->
   <script src="${path}/resource/js/Req4002/room.js"></script>
-  
+  <!-- swal창 alert -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -85,10 +88,6 @@
 		var followingMembers="${following}"
 		$("#following span").text(arrFun(followingMembers))
 		
-		// 팔로우 회원 클릭 시, 해당 회원 룸으로 이동 -- 안됨
-		function memberRoom(email){
-			location.href="communityMemberRoom.do?email="+email+"&loginEmail=${Login.email}"
-		}
 		// 룸주인과 로그인 세션 값 비교에 따라 설정값 변경
 		var login=""
 		var room=""
@@ -114,13 +113,39 @@
 		var replyInfos = "${replyInfo}"
 		$("#meRepCnt").text(arrFun(replyInfos))
 		console.log("내 댓글 정보",replyInfos)
+		// 팔로우 성공판단
+		if("${followSuccess}"=="팔로우성공"){
+			 Swal.fire({
+			      icon: 'success',
+			      title: '${followemail}',
+			      text: '회원님과 팔로우되었습니다.',
+			  });
+		}
+		
+		//언팔로우 성공판단
+		if("${msg}"=="언팔로우"){
+			Swal.fire({
+			      icon: 'success',
+			      title: ' ${unfollowemail}',
+			      text: '회원님과 언팔로우되었습니다.',
+			});
+		}
+		
 	});
 	// 팔로우 추가하기
 	function followAddFun(followEmail){
 		if("${Login.email}"==""){
-			if(confirm("[안내메시지] 로그인을 하셔야 팔로우가 가능합니다.\n 로그인화면으로 이동하시겠습니까?")){
-				location.href="${path}/SignIn.do"
-			}
+			 Swal.fire({
+			      title: "로그인을 하셔야 팔로우가 가능합니다.",
+			      icon: "warning",
+			      showCancelButton: true,
+			      confirmButtonText: "로그인",
+			      cancelButtonText: "취소",
+			    }).then((result) => {
+			      if (result.isConfirmed) {
+			        location.href = "${path}/SignIn.do";
+			      }
+			    });
 		}else{
 			location.href="${path}/followAdd.do?roomEmail="+followEmail+"&loginEmail=${Login.email}"
 		}
@@ -129,15 +154,7 @@
 	function unfollowFun(){
 		$("#unFollowForm").submit()
 	}
-	//alert(follow)
-	// 팔로우 성공판단
-	if("${followSuccess}"=="팔로우성공"){
-		alert("[안내메시지] ${Login.email}이 ${followemail}님과 팔로우가 되었습니다.")
-	}
-	//언팔로우 성공판단
-	if("${msg}"=="언팔로우"){
-		alert("[안내메시지] ${Login.email}이 ${unfollowemail}님과 언팔로우가 되었습니다.")
-	}
+
 	// 정보 공개/비공개
 	/* $("#flexSwitchCheckDefault00").change(function(){
 		fetch("${path}/communityMemberRoom.do",{
@@ -321,12 +338,13 @@
 	              <c:if test="${not empty follower}">
 	              	<c:forEach var="followers" items="${follower}" end="5">
 		                <a href="javascript:;" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="${followers.nickname}" >
-		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followers.profileimg}" style="width:55px;height:45px;" onclick="memberRoom(${followers.email})">
+		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followers.profileimg}" style="width:55px;height:45px;">
 		                </a>
 	                </c:forEach>
+	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#repModal">... 또는 + 남은팔로우수</span>
 	              </c:if>
 	              <c:if test="${empty follower}">
-	              	<span style="color:grey;">팔로우한 회원이 없습니다.</span>
+	              	<span style="color:grey;" >팔로우한 회원이 없습니다.</span>
 	              	<br><br><br>
 	              </c:if>
               </div>
@@ -337,9 +355,10 @@
 	              <c:if test="${not empty following}">
 	              	<c:forEach var="followings" items="${following}" end="5">
 		                <a href="javascript:;" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="${followings.nickname}" >
-		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" style="width:55px;height:45px;" onclick="memberRoom(${followings.email})">
+		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" style="width:55px;height:45px;">
 		                </a>
 	                </c:forEach>
+	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#repModal">...</span>
 	              </c:if>
 	              <c:if test="${empty following}">
 	              	<span style="color:grey;">팔로잉한 회원이 없습니다.</span>

@@ -360,7 +360,7 @@ li {
 																        location.href = "${path}/SignIn.do";
 																      }
 																    });
-																  } else {
+																  }else {
 																    location.href = "${path}/communityMemberRoom.do?email=${Login.email}";
 																  }
 																}

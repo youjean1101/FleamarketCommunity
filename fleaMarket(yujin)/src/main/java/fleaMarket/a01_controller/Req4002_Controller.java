@@ -277,7 +277,6 @@ public class Req4002_Controller {
 //			d.addAttribute("hide", hideInfo);
 //		}
 		
-		
 		if(loginEmail!=null) {
 			 if(service.followCheck(loginEmail, email)<1) { // 팔로우가 안되어있으면 유효성 체크
 				 d.addAttribute("followWhether", "0"); 
@@ -297,10 +296,8 @@ public class Req4002_Controller {
 		// 언팔중인 회원 정보
 		memInfoMap.put("div", "unfollowMem");
 		d.addAttribute("unfollowMember", service.roomMemberInfo(memInfoMap));
-		System.out.println("언팔한회원정보"+service.roomMemberInfo(memInfoMap));
+		//System.out.println("언팔한회원정보"+service.roomMemberInfo(memInfoMap));
 		
-		//System.out.println("룸회원정보"+service.roomMemberInfo(memInfoMap).spliterator());
-		//System.out.println("####팔로우하지않은 회원정보"+service.roomMemberInfo(memInfoMap).toString().split(","));
 		// 좋아요 갯수
 		d.addAttribute("likeCnt", service.boardLikeCnt(email));
 		System.out.println("좋아요갯수"+service.boardLikeCnt(email));
