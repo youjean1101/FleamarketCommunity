@@ -337,11 +337,11 @@
               <div class="avatar-group">
 	              <c:if test="${not empty follower}">
 	              	<c:forEach var="followers" items="${follower}" end="5">
-		                <a href="javascript:;" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="${followers.nickname}" >
+		                <a class="avatar avatar-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#followInfoModal" style="cursor:pointer;">
 		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followers.profileimg}" style="width:55px;height:45px;">
 		                </a>
 	                </c:forEach>
-	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#repModal">... 또는 + 남은팔로우수</span>
+	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#followInfoModal">...</span>
 	              </c:if>
 	              <c:if test="${empty follower}">
 	              	<span style="color:grey;" >팔로우한 회원이 없습니다.</span>
@@ -354,11 +354,11 @@
               <div class="avatar-group">
 	              <c:if test="${not empty following}">
 	              	<c:forEach var="followings" items="${following}" end="5">
-		                <a href="javascript:;" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="${followings.nickname}" >
+		                <a class="avatar avatar-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#followingInfoModal" style="cursor:pointer;">
 		                  <img alt="無" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" style="width:55px;height:45px;">
 		                </a>
 	                </c:forEach>
-	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#repModal">...</span>
+	                <span style="color:grey;cursor:pointer;" data-bs-toggle="modal" data-bs-target="#followingInfoModal">...</span>
 	              </c:if>
 	              <c:if test="${empty following}">
 	              	<span style="color:grey;">팔로잉한 회원이 없습니다.</span>
@@ -668,13 +668,96 @@
         </div>
       </div>
   </main>
+  <!-- 팔로우 중인 회원 모달창 -->
+  <div class="modal fade w-500" id="followInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="flex-container6">	
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
+		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
+		    <div class="modal-header">
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님이 팔로우한 회원정보<br></h5>
+		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		      </button>
+		    </div>
+		    <div class="modal-body">
+		      	<table class="table align-items-center mb-0">
+		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
+		      	</table>
+	      		<c:forEach var="follows" items="${follower}">
+	      			<div class="flex-item6"> 
+		      			<!-- <tr> -->
+		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${follows.profileimg}" alt="無">
+		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${follows.email}</div>
+		      			<div style="margin-left: 35%; margin-top: -3%;">${follows.nickname}</div>
+		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${follows.email}&loginEmail=${follows.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
+		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${follows.email}')"><i class="ni ni-fat-add"></i></button></div>
+		      			<!-- </tr> -->
+	      			</div>
+	      		</c:forEach>
+		    </div>
+		    <div class="modal-footer">
+		    	<div class="pagination6">
+		           <i class="ni ni-bold-left fa-arrow-left"></i>
+		            <ol id="numbers6">
+		            <!-- 페이지네이션 번호들이 오는곳 -->
+		            </ol>
+		           <i class="ni ni-bold-right fa-arrow-right"></i>  
+	         	</div> 
+		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+		    </div>
+		  </div>
+		</div>
+	 </div>
+	</div>
+  <!-- 팔로잉 중인 회원 모달창 -->
+  <div class="modal fade w-500" id="followingInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="flex-container6">	
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
+		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
+		    <div class="modal-header">
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님이 팔로잉한 회원정보<br></h5>
+		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		      </button>
+		    </div>
+		    <div class="modal-body">
+		      	<table class="table align-items-center mb-0">
+		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
+		      	</table>
+	      		<c:forEach var="followings" items="${following}">
+	      			<div class="flex-item6"> 
+		      			<!-- <tr> -->
+		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" alt="無">
+		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${followings.email}</div>
+		      			<div style="margin-left: 35%; margin-top: -3%;">${followings.nickname}</div>
+		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${followings.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
+		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${followings.email}')"><i class="ni ni-fat-add"></i></button></div>
+		      			<!-- </tr> -->
+	      			</div>
+	      		</c:forEach>
+		     
+		    </div>
+		    <div class="modal-footer">
+		    	<div class="pagination6">
+		           <i class="ni ni-bold-left fa-arrow-left"></i>
+		            <ol id="numbers6">
+		            <!-- 페이지네이션 번호들이 오는곳 -->
+		            </ol>
+		           <i class="ni ni-bold-right fa-arrow-right"></i>  
+	         	</div> 
+		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+		    </div>
+		  </div>
+		</div>
+	 </div>
+	</div>
   <!-- 팔로우 추가 회원(언팔중인 회원) 보러가기 모달창 -->
   <div class="modal fade w-500" id="unfollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="flex-container6">	
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
 		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
 		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">언팔로우 중인 회원정보<br></h5>
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname} 님이 언팔로우 중인 회원정보<br></h5>
 		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 		        <span aria-hidden="true">&times;</span>
 		      </button>
