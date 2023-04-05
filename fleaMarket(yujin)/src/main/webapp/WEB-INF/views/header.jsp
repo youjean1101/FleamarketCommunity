@@ -385,7 +385,7 @@ li {
 																      }
 																    });
 																  } else {
-																    location.href = "${path}/communityFollowMember.do?myemail=${Login.email}";
+																    location.href = "${path}/communityFollowMember.do?myEmail=${Login.email}&keyword=&curPage=0";
 																  }
 																}
 															</script>

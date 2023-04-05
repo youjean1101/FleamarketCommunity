@@ -342,15 +342,18 @@ CREATE TABLE friend
 );
 DROP TABLE friend CASCADE CONSTRAINTS;
 
-INSERT INTO friend VALUES('dbwls8382@naver.com','ehddms2909@naver.com');
-INSERT INTO friend VALUES('dbwls8382@naver.com','wjsdbsghks96@naver.com');
-INSERT INTO friend VALUES('yujin@mail.com','28888wjdaud@naver.com');
+DELETE FROM friend WHERE myemail='dbwls8382@naver.com';
+INSERT INTO friend VALUES('dbwls8382@naver.com','yujin@mail.com');
+INSERT INTO friend VALUES('dbwls8382@naver.com','test@gmail.com');
+INSERT INTO friend VALUES('dbwls8382@naver.com','test2@naver.com');
+INSERT INTO friend VALUES('yujin@mail.com','test2@naver.com');
 INSERT INTO friend VALUES('yujin@gmail.com','pucoca@naver.com');
 INSERT INTO friend VALUES('yujin@gmail.com','aoddl56@nate.com');
 INSERT INTO friend VALUES('pucoca@naver.com','yujin@gmail.com');
 INSERT INTO friend VALUES('two__yoon@naver.com','yujin@gmail.com');
 
-SELECT * FROM friend;
+SELECT * FROM friend
+WHERE myemail='dbwls8382@naver.com';
 select * FROM FLEAMARKETMEMBER;
 SELECT * FROM profile;
 DELETE FROM friend;
@@ -384,7 +387,7 @@ SELECT following
 FROM friend
 WHERE myemail='yujin@mail.com'
 
-SELECT * FROM friend
+SELECT * FROM friend;
 WHERE myemail='yujin@gmail.com'
 AND FOLLOWING='wjsdbsghks96@naver.com';
 
@@ -405,7 +408,7 @@ FROM FLEAMARKETMEMBER m,profile pro
 WHERE m.email=pro.email;
 
 
-DELETE FROM friend WHERE myemail='e';
+DELETE FROM friend WHERE myemail='dbwls8382@naver.com';
 
 select pro.profileimg,m.nickname,m.email
 FROM FLEAMARKETMEMBER m,friend f,profile pro
@@ -468,7 +471,12 @@ FROM (select m.email, m.password, m.nickname, m.personalnumber, m.phonenumber, m
 				AND f.myemail='yujin@mail.com') temp) LAST 
 WHERE RNUM BETWEEN 0 AND 10;
 
-SELECT f.* FROM FRIEND f;
+SELECT count(*) FROM FRIEND
+WHERE myemail='dbwls8382@naver.com';
+
+SELECT * FROM FRIEND
+WHERE myemail='dbwls8382@naver.com';
+
 
 select m.email, m.password, m.nickname, m.personalnumber, m.phonenumber, m.address, m.authority, m.businessnumber, m.kakaoemail, m.naveremail, m.category, m.name, f.myemail, f.FOLLOWING,pro.profileimg
 		FROM FLEAMARKETMEMBER m,friend f,profile pro
@@ -479,3 +487,41 @@ select m.email, m.password, m.nickname, m.personalnumber, m.phonenumber, m.addre
 				AND f.following=m.email
 				AND myemail='yujin@mail.com';
 SELECT * FROM temp;
+
+-- 선생님 방식의 페이징 처리
+SELECT cnt, mememail, proemail, nickname, personalnumber, phonenumber, address, authority, businessnumber, kakaoemail, naveremail, category, name, myemail, FOLLOWING, profileimg
+			FROM (
+				SELECT rownum cnt, m.*, f.*, pro.* , m.email mememail, pro.EMAIL proemail
+				FROM FLEAMARKETMEMBER m,friend f,profile pro
+				WHERE 1=1
+				AND (m.email LIKE '%'||''||'%'
+							OR nickname LIKE '%'||''||'%')
+				AND f.following=pro.email
+				AND f.following=m.email
+				AND myemail='yujin@mail.com')
+WHERE cnt BETWEEN 0 AND 10;
+			
+
+SELECT rownum cnt, m.*, f.*, pro.*, m.email mememail, f.myemail friemail, pro.EMAIL proemail
+FROM FLEAMARKETMEMBER m,friend f,profile pro
+WHERE 1=1
+AND (m.email LIKE '%'||'메'||'%'
+			OR m.nickname LIKE '%'||'메'||'%')
+AND f.following=pro.email
+AND f.following=m.email
+AND myemail='yujin@mail.com';
+
+SELECT count(*) FROM FRIEND f
+WHERE myemail='yujin@mail.com';
+
+SELECT * FROM FLEAMARKETMEMBER m,friend f,profile pro
+WHERE myemail='yujin@mail.com'
+AND f.following=pro.email
+AND f.following=m.email;
+
+SELECT count(*) FROM FLEAMARKETMEMBER m,friend f,profile pro
+WHERE myemail='yujin@mail.com'
+AND f.following=pro.email
+AND f.following=m.email
+AND (m.email LIKE '%'||'메'||'%'
+	OR m.nickname LIKE '%'||'메'||'%');

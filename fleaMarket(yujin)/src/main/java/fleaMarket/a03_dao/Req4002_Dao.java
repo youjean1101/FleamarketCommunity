@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import vo.BoardImg;
-import vo.Criteria;
 import vo.Capplication;
+import vo.Criteria;
 import vo.FollowMemberInfo;
+import vo.PageJYJ;
 import vo.RoomMemberInfo;
 
 //fleaMarket.a03_dao.CommunityDao_jyj
@@ -23,8 +24,12 @@ public interface Req4002_Dao {
 	public void communityFileUpdate(BoardImg fupt);
 	// 팔로우 조회
 	public List<FollowMemberInfo> followerSelect(FollowMemberInfo index);
-	// 팔로우 페이징 처리 조회
+	// 팔로우 페이징 처리 조회(윤환)
 	public List<FollowMemberInfo> followerSelectPage(Criteria cri);
+	// 팔로우 페이징 처리 조회(샘)
+	public List<FollowMemberInfo> followPage(PageJYJ sel);
+	// 팔로우한 회원 총수 
+	public int followTotCnt(PageJYJ sel);
 	// 팔로우 조회
 	public int followCheck(Map<String, String> map);
 	// 팔로우 취소

@@ -1,7 +1,5 @@
 package vo;
 
-import java.util.ArrayList;
-
 import org.springframework.web.multipart.MultipartFile;
 //vo.Capplication
 public class Capplication {
@@ -11,7 +9,6 @@ public class Capplication {
 	private String registDate;	// 등록날짜
 	private String updateDate;	// 수정날짜
 	private String category;	// 카테고리
-	//private String categoryDetail; //? 필요없는거같은디?
 	private String email;	//이메일
 	private String hashtag;	//해시태그
 	private int viewCnt;	//조회수

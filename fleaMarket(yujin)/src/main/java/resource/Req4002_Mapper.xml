@@ -42,12 +42,11 @@
 			WHERE communitynumber =#{communitynumber}
 		</update>
 		
-		<!-- 팔로우 회원 조회(검색) -->
+		<!-- 팔로우 회원 조회(room) -->
 		<select id="followerSelect" parameterType="followmemberinfo" resultType="followmemberinfo">
 				select *
 				FROM FLEAMARKETMEMBER m,friend f,profile pro
-				WHERE (m.email LIKE '%'||#{keyword}||'%'
-					OR m.nickname LIKE '%'||#{keyword}||'%')
+				WHERE 1=1
 			<choose>
 				<when test="div==null">
 					AND f.following=pro.email
@@ -61,6 +60,32 @@
 				</when>
 			</choose>
 		</select>
+		
+		<!-- 팔로우 회원 조회(페이징 처리)-->
+		<select id="followPage" parameterType="PageJYJ" resultType="followmemberinfo">
+			SELECT cnt, mememail, proemail, nickname, personalnumber, phonenumber, address, authority, businessnumber, kakaoemail, naveremail, category, name, myemail, FOLLOWING, profileimg
+			FROM (
+				SELECT rownum cnt, m.*, f.*, pro.* , m.email mememail, pro.EMAIL proemail
+				FROM FLEAMARKETMEMBER m,friend f,profile pro
+				WHERE 1=1
+				AND (m.email LIKE '%'||#{keyword}||'%'
+							OR m.nickname LIKE '%'||#{keyword}||'%')
+					AND f.following=pro.email
+					AND f.following=m.email
+					AND myemail=#{myEmail}
+			) 
+			WHERE cnt BETWEEN #{start} AND #{end}
+		</select>
+		
+		<!-- 팔로우 회원 수 -->
+		<select id="followTotCnt" parameterType="PageJYJ" resultType="int">
+			SELECT count(*) FROM FLEAMARKETMEMBER m,friend f,profile pro
+			WHERE myemail=#{myEmail}
+			AND f.following=pro.email
+			AND f.following=m.email
+			AND (m.email LIKE '%'||#{keyword}||'%'
+							OR m.nickname LIKE '%'||#{keyword}||'%')
+		</select> 
 		
 		<!-- 팔로우여부 체크 -->
 		<select id="followCheck" parameterType="HashMap" resultType="int">

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,10 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fleaMarket.a02_service.Req4002_Service;
 import fleaMarket.util.FileService;
 import vo.BoardImg;
-import vo.Criteria;
 import vo.Capplication;
+import vo.Criteria;
 import vo.FollowMemberInfo;
 import vo.PageDTO;
+import vo.PageJYJ;
 import vo.RoomMemberInfo;
 
 @Controller
@@ -227,15 +229,9 @@ public class Req4002_Controller {
 	}
 	
 	@RequestMapping("communityFollowMember.do")
-	public String communityFollowMember(FollowMemberInfo sel, Criteria cri,Model d,HttpSession session) {
+	public String communityFollowMember(@ModelAttribute("page") PageJYJ page ,Model d,HttpSession session) {
 		session.getAttribute("Login");
-		d.addAttribute("follower", service.followerSelect(sel));
-		//List<FollowMemberInfo> list = service.followerSelectPage(cri);
-		//System.out.println("팔로우 갯수 : "+service.followerSelect(sel).size()); 
-		//d.addAttribute("pageMaker", new PageDTO(cri, list.size()));
-		//System.out.println("페이징 팔로우 갯수 : "+service.followerSelectPage(cri));
-		//d.addAttribute("follower", list);
-		//System.out.println(service.followerSelect(sel));
+		d.addAttribute("follower", service.followPage(page));
 		return "communityFollowMember";
 	}
 	
@@ -261,7 +257,6 @@ public class Req4002_Controller {
 		}
 		String referer = request.getHeader("Referer");
 		return "redirect:"+referer;
-		//return "redirect:/communityMemberRoom.do?email="+roomEmail+"&loginEmail="+loginEmail;
 	}
 	
 	

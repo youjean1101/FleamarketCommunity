@@ -54,7 +54,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		// 정보 노출/미노출 -- 유지하는 기능넣기(Myroom일경우만 노출)
-		$("#flexSwitchCheckDefault00").on("click",function(){
+	/* 	$("#flexSwitchCheckDefault00").on("click",function(){
 			if($(this).is(":checked")){
 				$("#roomemail").show()
 				$("#roomphonenumber").show()
@@ -67,7 +67,7 @@
 				$("#roombusinessnumber").hide()
 				$("#bulbicon").attr("src","${path}/assets/img/small-logos/icon-bulb.svg")
 			}
-		})
+		}) */
 		$("#followingbutton").hide()
 		// 팔로우 여부판단
 		var follow = "${followWhether}"
@@ -155,42 +155,6 @@
 		$("#unFollowForm").submit()
 	}
 
-	// 정보 공개/비공개
-	/* $("#flexSwitchCheckDefault00").change(function(){
-		fetch("${path}/communityMemberRoom.do",{
-			method : "GET",
-			header:{
-				"Content-Type": "application/json",
-			},
-			body:JSON.stringify({
-			email:'${roommember.email}',
-			loginEmail:'${Login.email}'
-			//hideInfo:'1'
-		}),
-	})
-	    .then(res => res.json())  //응답 결과를 json으로 파싱
-	    .then(data => {
-	    		//***여기서 응답 결과로 실행할 동작을 정의하면 됨***
-	            // [ data.키값 ] 이런 형태로 value 추출 가능 
-	            console.log(data.string); //응답 결과를 console 창에 출력
-	            if($(this).is(":checked")){
-					$("#roomemail").show()
-					$("#roomphonenumber").show()
-					$("#roombusinessnumber").show()
-					$("#bulbicon").attr("src","${path}/resource/community/light-bulb.png")
-					$("#bulbicon").css({"width":"auto","height":"70px"})
-				}else{
-					$("#roomemail").hide()
-					$("#roomphonenumber").hide()
-					$("#roombusinessnumber").hide()
-					$("#bulbicon").attr("src","${path}/assets/img/small-logos/icon-bulb.svg")
-				}
-	    })
-	    .catch(err => { // 오류 발생시 오류를 담아서 보여줌
-	        console.log('Fetch Error',err);
-	    });
-	}) */
-	
 </script>
 </head>
 
@@ -216,7 +180,7 @@
               </p>
             </div>
           </div>
-          <!-- 언팔로우 변경 후후대ㅏㅐ아ㅔㅈ바에배-->
+          <!-- 언팔로우 변경-->
           <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" id="follow_chat">
             <div class="nav-wrapper position-relative end-0">
             	<!-- 팔로우 클릭 시, 보낼 데이터 -->
@@ -332,7 +296,7 @@
         </div>
         <div class="ms-auto d-flex">
           <div class="pe-4 mt-1 position-relative" >
-            <p class="text-black text-s font-weight-bold mb-2">${roommember.nickname}님이 팔로우한 회원들:</p> <!-- 시간남으면 팔로잉한 회원들 추가하기 -->
+            <p class="text-black text-s font-weight-bold mb-2">${roommember.nickname}님이 팔로우한 회원들:</p>
             <div class="d-flex align-items-center justify-content-center">
               <div class="avatar-group">
 	              <c:if test="${not empty follower}">
@@ -349,7 +313,7 @@
 	              </c:if>
               </div>
             </div>
-            <p class="text-black text-s font-weight-bold mb-2">${roommember.nickname}님이 팔로잉된 회원들:</p> <!-- 시간남으면 팔로잉한 회원들 추가하기 -->
+            <p class="text-black text-s font-weight-bold mb-2">${roommember.nickname}님을 팔로잉한 회원들:</p> <!-- 시간남으면 팔로잉한 회원들 추가하기 -->
             <div class="d-flex align-items-center justify-content-center">
               <div class="avatar-group">
 	              <c:if test="${not empty following}">
@@ -670,11 +634,11 @@
   </main>
   <!-- 팔로우 중인 회원 모달창 -->
   <div class="modal fade w-500" id="followInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="flex-container6">	
+	<div class="flex-container7">	
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
 		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
 		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님이 팔로우한 회원정보<br></h5>
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로우한 회원정보<br></h5>
 		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 		        <span aria-hidden="true">&times;</span>
 		      </button>
@@ -684,7 +648,7 @@
 		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
 		      	</table>
 	      		<c:forEach var="follows" items="${follower}">
-	      			<div class="flex-item6"> 
+	      			<div class="flex-item7"> 
 		      			<!-- <tr> -->
 		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${follows.profileimg}" alt="無">
 		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${follows.email}</div>
@@ -696,9 +660,9 @@
 	      		</c:forEach>
 		    </div>
 		    <div class="modal-footer">
-		    	<div class="pagination6">
+		    	<div class="pagination7">
 		           <i class="ni ni-bold-left fa-arrow-left"></i>
-		            <ol id="numbers6">
+		            <ol id="numbers7">
 		            <!-- 페이지네이션 번호들이 오는곳 -->
 		            </ol>
 		           <i class="ni ni-bold-right fa-arrow-right"></i>  
@@ -711,11 +675,11 @@
 	</div>
   <!-- 팔로잉 중인 회원 모달창 -->
   <div class="modal fade w-500" id="followingInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="flex-container6">	
+	<div class="flex-container8">	
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
 		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
 		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님이 팔로잉한 회원정보<br></h5>
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로잉한 회원정보<br></h5>
 		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 		        <span aria-hidden="true">&times;</span>
 		      </button>
@@ -725,7 +689,7 @@
 		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
 		      	</table>
 	      		<c:forEach var="followings" items="${following}">
-	      			<div class="flex-item6"> 
+	      			<div class="flex-item8"> 
 		      			<!-- <tr> -->
 		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" alt="無">
 		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${followings.email}</div>
@@ -738,9 +702,9 @@
 		     
 		    </div>
 		    <div class="modal-footer">
-		    	<div class="pagination6">
+		    	<div class="pagination8">
 		           <i class="ni ni-bold-left fa-arrow-left"></i>
-		            <ol id="numbers6">
+		            <ol id="numbers8">
 		            <!-- 페이지네이션 번호들이 오는곳 -->
 		            </ol>
 		           <i class="ni ni-bold-right fa-arrow-right"></i>  
@@ -1511,6 +1475,8 @@
   	callPageSelector(".flex-item4","#numbers4",".pagination4 .fa-arrow-left",".pagination4 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
   	callPageSelector(".flex-item5","#numbers5",".pagination5 .fa-arrow-left",".pagination5 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
   	callPageSelector(".flex-item6","#numbers6",".pagination6 .fa-arrow-left",".pagination6 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
+  	callPageSelector(".flex-item7","#numbers7",".pagination7 .fa-arrow-left",".pagination7 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
+  	callPageSelector(".flex-item8","#numbers8",".pagination8 .fa-arrow-left",".pagination8 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
  
   </script>
   

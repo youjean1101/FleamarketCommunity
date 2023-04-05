@@ -44,9 +44,13 @@
 				      title: ' ${unfollowemail}',
 				      text: '회원님과 언팔로우되었습니다.',
 				});
-				location.href="${path}/communityFollowMember.do?myemail="+login
+				location.href="${path}/communityFollowMember.do?myEmail="+login
 			}
 		});
+		function goPage(cnt){
+			$("[name=curPage]").val(cnt);
+			$("#indexform").submit()
+		}	
 		
 	</script>
 
@@ -59,9 +63,10 @@
           <div class="card" style="width:95%; margin-left:2.5%; margin-top:10%;">
           <div class="card-header p-3">
 		       <h6 style="font-size:20pt;">${Login.nickname}님의 팔로우 회원목록</h6>
-		       <form id="indexform">
-		       	<input type="hidden" name="myemail" value="${Login.email}" />
-		       	<input type="text" id="index" name="keyword" class="form-control" placeholder="회원검색(닉네임/이메일)" />
+		       <form id="indexform" action="${path}/communityFollowMember.do">
+		       	<input type="hidden" name="myEmail" value="${Login.email}" />
+		       	<input type="text" id="index" name="keyword" class="form-control" value="${page.keyword}" placeholder="회원검색(닉네임/이메일)" />
+		       	<input type="hidden" name="curPage" value="${page.curPage}"/>
 		       </form>
 	      </div>
             <div class="table-responsive">
@@ -79,7 +84,7 @@
                 <tbody>
                 <c:if test="${not empty follower}" >
 	                <c:forEach var="followers" items="${follower}">
-	                  <tr><!-- onclick="goEmail('${followers.email}')" -->
+	                  <tr>
 	                    <td>
 	                      <div class="d-flex px-2 py-1">
 	                        <div>
@@ -95,10 +100,10 @@
 	                      <p class="text-sm text-secondary mb-0">${followers.authority}</p>
 	                    </td>
 	                    <td class="align-middle text-center text-sm">
-	                      <p class="text-secondary mb-0 text-sm">${followers.email}</p>
+	                      <p class="text-secondary mb-0 text-sm">${followers.mememail}</p>
 	                    </td>
 	                    <td class="align-middle text-center">
-	                    	<a href="communityMemberRoom.do?email=${followers.email}&loginEmail=${Login.email}" >
+	                    	<a href="communityMemberRoom.do?email=${followers.mememail}&loginEmail=${Login.email}" >
 	                    		<i class="ni ni-shop"></i>
 	                    	</a>
 	                      <!-- <button type="button" id="roomGo" class="text-secondary text-sm roomGo" style="border:none; background:none;"><i class="ni ni-shop"></i></button> -->
@@ -111,7 +116,7 @@
 	                      </button>
 	                    </td> --%>
 	                    <td class="align-middle text-center">
-	                      <a href="communityFollowDelete.do?myemail=${Login.email}&following=${followers.email}" >
+	                      <a href="communityFollowDelete.do?myemail=${Login.email}&following=${followers.mememail}" >
 	                      		<i class="ni ni-scissors"></i></a>
 	                      <!-- <button type="button" id="unfollowGo" class="text-secondary text-sm unfollowGo" style="border:none; background:none;">
 	                      		<i class="ni ni-scissors"></i>
@@ -127,30 +132,20 @@
               </table>
             </div>
           </div>
-           <%-- <nav aria-label="Page navigation example" style = "margin-top: 20px;">
-				<ul class="pagination pagination-white justify-content-center" id="pageInfo">
-					<c:if test="${pageMaker.prev}">
-						<li class="page-item"><a class="page-link pagingnum"
-							href="${pageMaker.startPage-1}" tabindex="-1"> <i
-								class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
-						</a></li>
-					</c:if>
-
-					<c:forEach var="num" begin="${pageMaker.startPage}"
-						end="${pageMaker.endPage}">
-						<li class="page-item ${pageMaker.cri.pageNum == num ? "active":"" }">
-							<a class="page-link" href="${num }">${num }</a>
-						</li>
-					</c:forEach>
-
-					<c:if test="${pageMaker.next }">
-						<li class="page-item"><a class="page-link pagingnum"
-							href="${pageMaker.endPage+1}"> <i
-								class="fa fa-angle-right"></i> <span class="sr-only">Next</span>
-						</a></li>
-					</c:if>
-				</ul>
-			</nav>    --%>      
+			<ul class="pagination  justify-content-end" style="margin-top:2%; margin-right:45%;"> 
+				<li class="page-item">
+					<a class="page-link" href="javascript:goPage(${page.startBlock-1});"><</a>
+				</li>
+				
+				<c:forEach var="cnt" begin="${page.startBlock}" end="${page.endBlock}">
+					<li class="page-item ${page.curPage==cnt?'active':''}">
+					<a class="page-link" href="javascript:goPage(${cnt});" style="color:white;">${cnt}</a></li> <!-- cnt: 페이지수  -->
+				</c:forEach>
+				
+				<li class="page-item">
+					<a class="page-link" href="javascript:goPage(${page.endBlock+1});">></a>
+				</li>
+			</ul>    
   </main>
   <!-- Modal 창-->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -382,6 +377,15 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+    
+    //페이징 처리 
+   /*  $(".page-item a").on("click", function(e) {
+
+       e.preventDefault(); //기본 동작 제한    
+       
+       pageForm.find("input[name='pageNum']").val($(this).attr("href"));
+       pageForm.submit();
+    }); */
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
