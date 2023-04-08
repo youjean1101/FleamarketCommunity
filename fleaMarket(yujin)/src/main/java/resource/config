@@ -7,13 +7,13 @@ jdbc.pass=tiger
 
 # 2. 파일 업로드 정보(서버위치 정보)
 //회원가입시 프로필사진 업로드
-profile.upload=C:/a01_javaxep/workspace/git/fleaMarketProject/fleaMarket/src/main/webapp/resource/img/Member/profileimg/
-board.upload2=C:/a01_javaexp/workspace/fleaMarketProject/fleaMarket/src/main/webapp/resource/community/
-fleamarket.upload3=C:/Users/gram/git/fleaMarketProject/fleaMarket/src/main/webapp/resource/
+profile.upload=C:/Users/dbwls/git/FleamarketCommunity/fleaMarket(yujin)/src/main/webapp/resource/img/Member/profileimg/
+board.upload2=C:/Users/dbwls/git/FleamarketCommunity/fleaMarket(yujin)/src/main/webapp/resource/community/
+fleamarket.upload3=C:/Users/dbwls/git/FleamarketCommunity/fleaMarket(yujin)/src/main/webapp/resource/
 // 플리마켓 신청글
-app.upload=C:/a01_javaexp/workspace/fleaMarketProject/fleaMarket/src/main/webapp/resource/img/application/
+app.upload=C:/Users/dbwls/git/FleamarketCommunity/fleaMarket(yujin)/src/main/webapp/resource/img/application/
 //공지,문의사항 파일
-qna.upfile=C:/a01_javaxep/workspace/git/fleaMarketProject/fleaMarket/src/main/webapp/resource/
+qna.upfile=C:/Users/dbwls/git/FleamarketCommunity/fleaMarket(yujin)/src/main/webapp/resource/
 
 
 # 3. 메일 발송

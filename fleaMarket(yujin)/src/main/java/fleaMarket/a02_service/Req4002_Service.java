@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import fleaMarket.a03_dao.Req4002_Dao;
 import vo.BoardImg;
-import vo.Criteria;
 import vo.Capplication;
 import vo.FollowMemberInfo;
 import vo.PageJYJ;
@@ -47,18 +46,12 @@ public class Req4002_Service {
 	public List<FollowMemberInfo> followerSelect(FollowMemberInfo index) {
 		if(index.getKeyword()==null) index.setKeyword("");
 		if(index.getMyemail()==null) index.setMyemail("");
-		//if(index.getDiv()==null) index.setDiv("");
 		return dao.followerSelect(index);
-	}
-	
-	public List<FollowMemberInfo> followerSelectPage(Criteria cri) {
-		return dao.followerSelectPage(cri);
 	}
 	
 	public List<FollowMemberInfo> followPage(PageJYJ sel){
 		if(sel.getKeyword()==null) sel.setKeyword("");
 		if(sel.getMyEmail()==null) sel.setMyEmail("");
-		if(sel.getDiv()==null) sel.setDiv("");
 		
 		// 1. 총페이지 수
 		sel.setCount(dao.followTotCnt(sel));

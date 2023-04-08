@@ -5,7 +5,6 @@ import java.util.Map;
 
 import vo.BoardImg;
 import vo.Capplication;
-import vo.Criteria;
 import vo.FollowMemberInfo;
 import vo.PageJYJ;
 import vo.RoomMemberInfo;
@@ -24,8 +23,6 @@ public interface Req4002_Dao {
 	public void communityFileUpdate(BoardImg fupt);
 	// 팔로우 조회
 	public List<FollowMemberInfo> followerSelect(FollowMemberInfo index);
-	// 팔로우 페이징 처리 조회(윤환)
-	public List<FollowMemberInfo> followerSelectPage(Criteria cri);
 	// 팔로우 페이징 처리 조회(샘)
 	public List<FollowMemberInfo> followPage(PageJYJ sel);
 	// 팔로우한 회원 총수 

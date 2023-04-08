@@ -257,3 +257,38 @@
    color:#333;
    font-size:1.2em;
 }
+.pagination8{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers8{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers8 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers8 li a:hover{
+   opacity:1;
+}
+#numbers8 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination8 i{
+   color:#333;
+   font-size:1.2em;
+}

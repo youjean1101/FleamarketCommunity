@@ -314,12 +314,10 @@ public class Req4002_Controller {
 		// 나의 게시판 정보(댓글정보)
 		repMap.put("div", "meboard");
 		d.addAttribute("boardreplyInfo", service.boardReplySelect(repMap));
-//		System.out.println("내가쓴 게시판 정보(댓글): "+service.boardReplySelect(repMap));
 		
 		// 나의 댓글 정보
 		repMap.put("div", "mereply");
 		d.addAttribute("replyInfo", service.boardReplySelect(repMap));
-//		System.out.println("내가 쓴 댓글 정보: "+service.boardReplySelect(repMap));
 		
 		// 카테고리별 게시판 조회
 		board.setEmail(email);
@@ -327,19 +325,15 @@ public class Req4002_Controller {
 		for(int i=1;i<13;i++) {
 			if(i<10) {
 				board.setRegistDateMonth("0"+i);
-//				System.out.println("게시글 번호:"+board.getRegistDateMonth());
 				d.addAttribute("month"+i, service.boardSelect(board).size()); 
-//				System.out.println(i+"월 게시글 수:"+service.boardSelect(board).size());
 			}else {
 				board.setRegistDateMonth(Integer.toString(i));
-//				System.out.println("10이상 게시글 번호"+board.getRegistDateMonth());
 				d.addAttribute("month"+i, service.boardSelect(board).size()); 
-//				System.out.println(i+"월 게시글 수:"+service.boardSelect(board).size());
 			}
 		}
 		board.setRegistDateMonth("");
-		//카테고리별
 		
+		//카테고리별
 		board.setCategory("홍보글");
 		d.addAttribute("adv", service.boardSelect(board));
 		
@@ -351,16 +345,6 @@ public class Req4002_Controller {
 		
 		board.setCategory("꿀팁");
 		d.addAttribute("tip", service.boardSelect(board)); 
-		
-		// 좋아요 누적처리 및 커뮤니티 정보
-//		int totlike=0;
-//		for(RoomMemberInfo e:service.boardSelect(boardMap)) {
-//			totlike += e.getLikecnt();
-//			System.out.println("좋아요수:"+e.getLikecnt());
-//			System.out.println("전체좋아요수:"+totlike);
-//		}
-//		d.addAttribute("boardInfo", service.boardSelect(boardMap));
-//		d.addAttribute("likeCnt", totlike);
 		
 		return "communityMemberRoom";
 	}

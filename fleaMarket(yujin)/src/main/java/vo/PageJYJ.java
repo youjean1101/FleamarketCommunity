@@ -3,7 +3,6 @@ package vo;
 public class PageJYJ {
 	private String keyword;
 	private String myEmail;
-	private String div;
 	// 2. 페이징 처리 1단계
 	private int count; // 전체 데이터 건수
 	private int pageSize; //한페이지에 보여줄 데이터 건수
@@ -27,12 +26,6 @@ public class PageJYJ {
 	}
 	public void setMyEmail(String myEmail) {
 		this.myEmail = myEmail;
-	}
-	public String getDiv() {
-		return div;
-	}
-	public void setDiv(String div) {
-		this.div = div;
 	}
 	public int getCount() {
 		return count;

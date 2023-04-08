@@ -449,7 +449,7 @@ $('#Trem_2,#Trem_1,#cbx_chkAll').change(function(){
 		if(!OkPhonenum){alert("핸드폰번호를 정확하게 입력부탁드립니다."); return false;}
 		if(!OkAddress){alert("우편번호 찾기를 통해서 주소기재 부탁드립니다."); return false;}
 			console.log($('[name=profileimg]').val())
-			if($('[name=nickname').val().length<2){
+			if($('[name=nickname]').val().length<2){
 				$('[name=nickname]').val($('[name=email]').val().split('@')[0])
 			}
 			$('[name=address]').val($('#sample6_postcode').val()+"&"+$('#sample6_address').val()+"&"+$('#sample6_extraAddress').val()+"&"+$('#sample6_detailAddress').val())

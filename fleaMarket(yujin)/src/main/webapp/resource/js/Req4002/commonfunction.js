@@ -23,11 +23,12 @@ function contentfocus(what){
 $(".ql-link").hide()
 
 //페이징 처리
- function callPageSelector(flex,number,paginationleft, paginationright){
+ function callPageSelector(flex, number, paginationleft, paginationright){
         const rowsPerPage =8; // 10개 씩 끊겟다.
         const rows = document.querySelectorAll(flex);// 게시글 row를 전체 선택
         //console.log(rows);
         const rowsCount = rows.length //게시글 전체의 갯수 
+       
         console.log("gd"+rowsCount);
         const PageCount = Math.ceil(rowsCount/rowsPerPage); // 전체글개수/한페이지에 보여질 갯수를 올림처리 = 페이지 갯수
         //console.log(PageCount)
@@ -45,7 +46,6 @@ $(".ql-link").hide()
         }
         const numberBtn = numbers.querySelectorAll('a'); //페이지버튼 a를 모두 선택
         //console.log(numberBtn);
-        
         
         //페이지네이션 감추기
         for(nb of numberBtn){
@@ -84,7 +84,7 @@ $(".ql-link").hide()
             
         } //displayRow 
         
-        displayRow(0); // 시작하자마자 해당 갯수만큼ㅁ만 페이지보이도록 실행함
+        displayRow(0); // 시작하자마자 해당 갯수만큼만 페이지보이도록 실행함
         
         //페이지네이션 버튼 그룹표시
         function displayPage(num){

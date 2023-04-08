@@ -474,7 +474,7 @@ WHERE RNUM BETWEEN 0 AND 10;
 SELECT count(*) FROM FRIEND
 WHERE myemail='dbwls8382@naver.com';
 
-SELECT * FROM FRIEND
+SELECT * FROM FRIEND;
 WHERE myemail='dbwls8382@naver.com';
 
 

@@ -7,10 +7,6 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
-<%--
-	언팔로우변경
-변경!!!
- --%>
 <html>
 <head>
 <title>팔로우 회원room</title>
@@ -50,7 +46,6 @@
   <!-- swal창 alert -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-</head>
 <script type="text/javascript">
 	$(document).ready(function(){
 		// 정보 노출/미노출 -- 유지하는 기능넣기(Myroom일경우만 노출)
@@ -79,7 +74,7 @@
 			$("#followingbutton").hide()
 		}
 		
-		// 아래 차트 js에 갯수 계산 기능 있음 arrFun(obj)
+		// 아래 차트 js에 개수 계산 기능 있음 arrFun(obj)
 		// 팔로우수 넣기
 		var followMembers="${follower}"
 		$("#folloewcnt").text(arrFun(followMembers))
@@ -101,13 +96,13 @@
 		var boardrepInfos = "${boardreplyInfo}"
 		$("#meBoardRepCnt").text(arrFun(boardrepInfos))
 		
-		// 카테고리별 게시글 갯수정보
+		// 카테고리별 게시글 개수정보
 		$("#boardCategoryCntTab td").eq(0).text(arrFun("${adv}")+"개") //
 		$("#boardCategoryCntTab td").eq(1).text(arrFun("${idea}")+"개")
 		$("#boardCategoryCntTab td").eq(2).text(arrFun("${life}")+"개")
 		$("#boardCategoryCntTab td").eq(3).text(arrFun("${tip}")+"개")
 		
-		// 월별 게시글 갯수정보
+		// 월별 게시글 개수정보
 		
 		// 내가쓴 댓글 정보
 		var replyInfos = "${replyInfo}"
@@ -154,7 +149,6 @@
 	function unfollowFun(){
 		$("#unFollowForm").submit()
 	}
-
 </script>
 </head>
 
@@ -266,9 +260,9 @@
 	                <i class="ni ni-favourite-28" aria-hidden="true"></i>
 	              </div>
 	              <h5 class="mt-3 mb-0">${likeCnt}<span class="text-secondary text-sm">개</span></h5>
-	              <p class="mb-0">${roommember.nickname}님 게시글의 좋아요 갯수</p>
+	              <p class="mb-0">${roommember.nickname}님 게시글의 좋아요 개수</p>
 	              <h5 class="mt-3 mb-0"><span id="meBoardRepCnt"></span><span class="text-secondary text-sm">개</span></h5>
-	              <p class="mb-0">${roommember.nickname}님 게시글의 댓글 갯수</p>
+	              <p class="mb-0">${roommember.nickname}님 게시글의 댓글 개수</p>
 	            </div>
 	          </div>
 	        </div>
@@ -279,7 +273,7 @@
 	                <i class="ni ni-active-40" aria-hidden="true"></i>
 	              </div>
 	              <h5 class="mt-3 mb-0"><span id="meRepCnt"></span><span class="text-secondary text-sm">개</span></h5>
-	              <p class="mb-0">${roommember.nickname}님이 쓰신 댓글 갯수</p>
+	              <p class="mb-0">${roommember.nickname}님이 쓰신 댓글 개수</p>
 	              <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#repModal">
 	              		댓글보기</button>
 	            </div>
@@ -385,7 +379,7 @@
           <div class="card">
             <div class="card-header pb-0 p-3">
               <div class="d-flex justify-content-between">
-                <h6 class="mb-0">월별 게시글 등록 갯수</h6>
+                <h6 class="mb-0">월별 게시글 등록 개수</h6>
                 <button type="button" class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center" 
                 		data-bs-toggle="modal" data-bs-target="#boardMonthCntModal">
                   <i class="fas fa-info" aria-hidden="true"></i>
@@ -632,137 +626,9 @@
         </div>
       </div>
   </main>
-  <!-- 팔로우 중인 회원 모달창 -->
-  <div class="modal fade w-500" id="followInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="flex-container7">	
-		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
-		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
-		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로우한 회원정보<br></h5>
-		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-		        <span aria-hidden="true">&times;</span>
-		      </button>
-		    </div>
-		    <div class="modal-body">
-		      	<table class="table align-items-center mb-0">
-		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
-		      	</table>
-	      		<c:forEach var="follows" items="${follower}">
-	      			<div class="flex-item7"> 
-		      			<!-- <tr> -->
-		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${follows.profileimg}" alt="無">
-		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${follows.email}</div>
-		      			<div style="margin-left: 35%; margin-top: -3%;">${follows.nickname}</div>
-		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${follows.email}&loginEmail=${follows.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
-		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${follows.email}')"><i class="ni ni-fat-add"></i></button></div>
-		      			<!-- </tr> -->
-	      			</div>
-	      		</c:forEach>
-		    </div>
-		    <div class="modal-footer">
-		    	<div class="pagination7">
-		           <i class="ni ni-bold-left fa-arrow-left"></i>
-		            <ol id="numbers7">
-		            <!-- 페이지네이션 번호들이 오는곳 -->
-		            </ol>
-		           <i class="ni ni-bold-right fa-arrow-right"></i>  
-	         	</div> 
-		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
-		    </div>
-		  </div>
-		</div>
-	 </div>
-	</div>
-  <!-- 팔로잉 중인 회원 모달창 -->
-  <div class="modal fade w-500" id="followingInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="flex-container8">	
-		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
-		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
-		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로잉한 회원정보<br></h5>
-		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-		        <span aria-hidden="true">&times;</span>
-		      </button>
-		    </div>
-		    <div class="modal-body">
-		      	<table class="table align-items-center mb-0">
-		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
-		      	</table>
-	      		<c:forEach var="followings" items="${following}">
-	      			<div class="flex-item8"> 
-		      			<!-- <tr> -->
-		      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" alt="無">
-		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${followings.email}</div>
-		      			<div style="margin-left: 35%; margin-top: -3%;">${followings.nickname}</div>
-		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${followings.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
-		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${followings.email}')"><i class="ni ni-fat-add"></i></button></div>
-		      			<!-- </tr> -->
-	      			</div>
-	      		</c:forEach>
-		     
-		    </div>
-		    <div class="modal-footer">
-		    	<div class="pagination8">
-		           <i class="ni ni-bold-left fa-arrow-left"></i>
-		            <ol id="numbers8">
-		            <!-- 페이지네이션 번호들이 오는곳 -->
-		            </ol>
-		           <i class="ni ni-bold-right fa-arrow-right"></i>  
-	         	</div> 
-		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
-		    </div>
-		  </div>
-		</div>
-	 </div>
-	</div>
-  <!-- 팔로우 추가 회원(언팔중인 회원) 보러가기 모달창 -->
-  <div class="modal fade w-500" id="unfollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="flex-container6">	
-		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
-		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
-		    <div class="modal-header">
-		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname} 님이 언팔로우 중인 회원정보<br></h5>
-		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-		        <span aria-hidden="true">&times;</span>
-		      </button>
-		    </div>
-		    <div class="modal-body">
-		      	<table class="table align-items-center mb-0">
-		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
-		      		<c:if test="${empty unfollowMember}">
-		      		<tr><td colspan="5" style="text-align:center;">언팔로우 중인 회원이 없습니다.</td></tr>
-		      		</c:if>
-		      	</table>
-		      		<c:if test="${not empty unfollowMember}">
-			      		<c:forEach var="unfollowmem" items="${unfollowMember}">
-			      			<div class="flex-item6"> 
-				      			<!-- <tr> -->
-				      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${unfollowmem.profileimg}" alt="無">
-				      			<div style="margin-left: 10%; margin-top: -3.5%;" >${unfollowmem.email}</div>
-				      			<div style="margin-left: 35%; margin-top: -3%;">${unfollowmem.nickname}</div>
-				      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${unfollowmem.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
-				      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${unfollowmem.email}')"><i class="ni ni-fat-add"></i></button></div>
-				      			<!-- </tr> -->
-			      			</div>
-			      		</c:forEach>
-		      		</c:if>
-		     
-		    </div>
-		    <div class="modal-footer">
-		    	<div class="pagination6">
-		           <i class="ni ni-bold-left fa-arrow-left"></i>
-		            <ol id="numbers6">
-		            <!-- 페이지네이션 번호들이 오는곳 -->
-		            </ol>
-		           <i class="ni ni-bold-right fa-arrow-right"></i>  
-	         	</div> 
-		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
-		    </div>
-		  </div>
-		</div>
-	 </div>
-	</div>
-  <!-- 카테고리별 게시글 갯수정보 모달창  -->
+  
+  
+  <!-- 카테고리별 게시글 개수정보 모달창  -->
 	<div class="modal fade" id="boardCategoryCntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  <div class="modal-content">
@@ -786,7 +652,7 @@
 		  </div>
 		</div>
 	</div>
-  <!-- 월별 게시글 갯수정보 모달창  -->
+  <!-- 월별 게시글 개수정보 모달창  -->
 	<div class="modal fade" id="boardMonthCntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  <div class="modal-content">
@@ -845,11 +711,9 @@
 		      		<c:if test="${not empty replyInfo}">
 				      		<c:forEach var="repInfo" items="${replyInfo}">
 					      		<div class="flex-item1" onclick="location.href='${path}/CommunityDetail.do?communityNumber=${repInfo.communitynumber}&keyword=&type=&shift=registDate&category=${repInfo.category}'" style="cursor:pointer;"> 
-						      			<%-- <tr onclick="location.href='${path}/CommunityDetail.do?communityNumber=${repInfo.communitynumber}&keyword=&type=&shift=registDate&category=${repInfo.category}'" style="cursor:pointer;"> --%>
 					      				<div id="category" style="margin-top: 3%;">${repInfo.category}</div>
 					      				<div id="title" style="margin-left:34%;margin-top: -40px;">${repInfo.title}</div>
 					      				<div id="repcontent" style="margin-left:65%;margin-top: -27px;">${repInfo.repcontent}</div>
-						      			<!-- </tr> -->
 					      		</div>
 				      		</c:forEach>
 		      		</c:if>
@@ -868,7 +732,7 @@
 		</div>
 	  </div>
 	</div>
-
+	
   <!-- 홍보글 더보기 모달창 -->
   <div class="modal fade" id="advBoardAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   	<div class="flex-container2">
@@ -882,7 +746,7 @@
 		      </button>
 		    </div>
 		    <div class="modal-body">
-		      	<table id="boardViewTab" class="table align-items-center mb-0">
+		      	<table class="table align-items-center mb-0">
 		      		<thead>
 		      			<tr><th>이미지</th><th>카테고리</th><th>게시글명</th></tr>
 		      		</thead>
@@ -893,13 +757,11 @@
 			      			<c:if test="${empty advlist.fileNameList[0]}">
 			      				<div id="img" style="margin-top:3%; margin-left: 2%;"><img src="${path}/resource/community/default_Img.png" style="width:auto;height:50px;" ></div>
 			      			</c:if>
-			      			<%-- <tr onclick="location.href='${path}/CommunityDetail.do?communityNumber=${advlist.communitynumber}&keyword=&type=&shift=registDate&category=${advlist.category}'" style="cursor:pointer;"> --%>
 		      				<c:if test="${not empty advlist.fileNameList[0]}">
 		      					<div id="img" style="margin-top:3%; margin-left: 2%;"><img src="${path}/resource/community/${advlist.fileNameList[0]}" style="width:auto;height:50px;" ></div>
 		      				</c:if>
 		      				<div id="category" style="margin-left:33%; margin-top: -40px;">${advlist.category}</div>
 		      				<div id="title" style="margin-left:68%; margin-top: -27px;">${advlist.title}</div>
-			      			<!-- </tr> -->
 			      		</div>
 		      		</c:forEach>
 	      		</c:if>
@@ -918,12 +780,7 @@
 		</div>
 	  </div>
 	</div>
-	<script>
-		/* $(".addView").click(function(){
-			var data = $(this).data('id');
-			alert(data)
-		}); */
-	</script>
+	
   <!-- 사업아이디어 더보기 모달창 -->
   <div class="modal fade" id="ideaBoardAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="flex-container3">	
@@ -937,7 +794,7 @@
 		      </button>
 		    </div>
 		    <div class="modal-body">
-		      	<table id="boardViewTab" class="table align-items-center mb-0">
+		      	<table class="table align-items-center mb-0">
 		      		<thead>
 		      			<tr><th>이미지</th><th>카테고리</th><th>게시글명</th></tr>
 		      		</thead>
@@ -945,7 +802,6 @@
 	      		<c:if test="${not empty idea}">
 			      		<c:forEach var="idealist" items="${idea}">
 			      			<div class="flex-item3" onclick="location.href='${path}/CommunityDetail.do?communityNumber=${idealist.communitynumber}&keyword=&type=&shift=registDate&category=${idealist.category}'" style="cursor:pointer;">
-				      			<%-- <tr onclick="location.href='${path}/CommunityDetail.do?communityNumber=${idealist.communitynumber}&keyword=&type=&shift=registDate&category=${idealist.category}'" style="cursor:pointer;"> --%>
 				      				<c:if test="${not empty idealist.fileNameList[0]}">
 				      					<div id="img" style="margin-top:3%; margin-left: 2%;"><img src="${path}/resource/community/${idealist.fileNameList[0]}" style="width:auto;height:50px;" ></div>
 				      				</c:if>
@@ -954,7 +810,6 @@
 				      				</c:if>
 				      				<div id="category" style="margin-left:33%;margin-top: -40px;">${idealist.category}</div>
 				      				<div id="title" style="margin-left:68%;margin-top: -27px;">${idealist.title}</div>
-				      			<!-- </tr> -->
 			      			</div>
 			      		</c:forEach>
 		      	</c:if>
@@ -973,12 +828,6 @@
 		</div>
 	 </div>
 	</div>
-	<script>
-		/* $(".addView").click(function(){
-			var data = $(this).data('id');
-			alert(data)
-		}); */
-	</script>
   <!-- 사는이야기 더보기 모달창 -->
   <div class="modal fade" id="lifeBoardAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="flex-container4">	
@@ -992,7 +841,7 @@
 		      </button>
 		    </div>
 		    <div class="modal-body">
-		      	<table id="boardViewTab" class="table align-items-center mb-0">
+		      	<table class="table align-items-center mb-0">
 		      		<thead>
 		      			<tr><th>이미지</th><th>카테고리</th><th>게시글명</th></tr>
 		      		</thead>
@@ -1000,7 +849,6 @@
 		      		<c:if test="${not empty life}">
 			      		<c:forEach var="lifelist" items="${life}">
 			      			<div class="flex-item4" onclick="location.href='${path}/CommunityDetail.do?communityNumber=${lifelist.communitynumber}&keyword=&type=&shift=registDate&category=${lifelist.category}'" style="cursor:pointer;">
-				      			<%-- <tr onclick="location.href='${path}/CommunityDetail.do?communityNumber=${lifelist.communitynumber}&keyword=&type=&shift=registDate&category=${lifelist.category}'" style="cursor:pointer;"> --%>
 				      				<c:if test="${not empty lifelist.fileNameList[0]}">
 				      					<div id="img" style="margin-top:3%; margin-left: 2%;"><img src="${path}/resource/community/${lifelist.fileNameList[0]}" style="width:auto;height:50px;" ></div>
 				      				</c:if>
@@ -1009,7 +857,6 @@
 				      				</c:if>
 				      				<div id="category" style="margin-left:32%;margin-top: -40px;">${lifelist.category}</div>
 				      				<div id="title" style="margin-left:68%;margin-top: -27px;">${lifelist.title}</div>
-				      			<!-- </tr> -->
 			      			</div>
 			      		</c:forEach>
 		      		</c:if>
@@ -1028,12 +875,7 @@
 		</div>
 	 </div>
 	</div>
-	<script>
-		/* $(".addView").click(function(){
-			var data = $(this).data('id');
-			alert(data)
-		}); */
-	</script>
+	
   <!-- 꿀팁 게시글 더보기 모달창 -->
   <div class="modal fade" id="tipBoardAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="flex-container5">
@@ -1047,7 +889,7 @@
 		      </button>
 		    </div>
 		    <div class="modal-body">
-		      	<table id="boardViewTab" class="table align-items-center mb-0">
+		      	<table class="table align-items-center mb-0">
 		      		<thead>
 		      			<tr><th>이미지</th><th>카테고리</th><th>게시글명</th></tr>
 		      		</thead>
@@ -1055,7 +897,6 @@
 	      		<c:if test="${not empty tip}">
 		      		<c:forEach var="tiplist" items="${tip}">
 			      		<div class="flex-item5" onclick="location.href='${path}/CommunityDetail.do?communityNumber=${tiplist.communitynumber}&keyword=&type=&shift=registDate&category=${tiplist.category}'" style="cursor:pointer;">
-			      			<%-- <tr onclick="location.href='${path}/CommunityDetail.do?communityNumber=${tiplist.communitynumber}&keyword=&type=&shift=registDate&category=${tiplist.category}'" style="cursor:pointer;"> --%>
 			      				<c:if test="${not empty tiplist.fileNameList[0]}">
 			      					<div id="img" style="margin-top:3%; margin-left: 2%;"><img src="${path}/resource/community/${tiplist.fileNameList[0]}" style="width:auto;height:50px;" ></div>
 			      				</c:if>
@@ -1064,7 +905,6 @@
 			      				</c:if>
 			      				<div id="category" style="margin-left:32%; margin-top: -40px;">${tiplist.category}</div>
 			      				<div id="title" style="margin-left:68%; margin-top: -27px;">${tiplist.title}</div>
-			      			<!-- </tr> -->
 		      			</div>
 		      		</c:forEach>
 	      		</c:if>
@@ -1083,12 +923,135 @@
 		</div>
 	 </div>
 	</div>
-	<script>
-		/* $(".addView").click(function(){
-			var data = $(this).data('id');
-			alert(data)
-		}); */
-	</script>
+	<!-- 팔로우 추가 회원(언팔중인 회원) 보러가기 모달창 -->
+	  <div class="modal fade" id="unfollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="flex-container6">	
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
+			    <div class="modal-header">
+			      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname} 님이 언팔로우 중인 회원정보<br></h5>
+			      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+			        <span aria-hidden="true">&times;</span>
+			      </button>
+			    </div>
+			    <div class="modal-body">
+			      	<table class="table align-items-center mb-0">
+			      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
+			      		<c:if test="${empty unfollowMember}">
+			      			<tr><td colspan="5" style="text-align:center;">언팔로우 중인 회원이 없습니다.</td></tr>
+			      		</c:if>
+			      	</table>
+			      		<c:if test="${not empty unfollowMember}">
+				      		<c:forEach var="unfollowmem" items="${unfollowMember}">
+				      			<div class="flex-item6"> 
+					      			<div id="img" style="margin-top:3%; margin-left: 2%;">
+						      			<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${unfollowmem.profileimg}" alt="無">
+						      		</div>
+						      			<div id="email" style="margin-left: 10%; margin-top: -3.5%;" >${unfollowmem.email}</div>
+						      			<div id="nickname" style="margin-left: 35%; margin-top: -3%;">${unfollowmem.nickname}</div>
+						      			<div id="roomGo" style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${unfollowmem.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
+						      			<div id="followadd" style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${unfollowmem.email}')"><i class="ni ni-fat-add"></i></button></div>
+					      			</div>
+				      		</c:forEach>
+			      		</c:if>
+			    </div>
+			    <div class="modal-footer">
+			    	<div class="pagination6">
+			           <i class="ni ni-bold-left fa-arrow-left"></i>
+			            <ol id="numbers6">
+			            <!-- 페이지네이션 번호들이 오는곳 -->
+			            </ol>
+			           <i class="ni ni-bold-right fa-arrow-right"></i>  
+		         	</div> 
+			      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+			    </div>
+			  </div>
+			</div>
+		 </div>
+		</div>
+	
+	<!-- 팔로우 중인 회원 모달창 -->
+  <div class="modal fade" id="followInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="flex-container7">	
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
+		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
+		    <div class="modal-header">
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로우한 회원정보<br></h5>
+		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		      </button>
+		    </div>
+		    <div class="modal-body">
+		      	<table class="table align-items-center mb-0">
+		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
+		      	</table>
+	      		<c:forEach var="follows" items="${follower}">
+	      			<div class="flex-item7">
+	      				<div id="img" style="margin-top:3%; margin-left: 2%;">
+		      				<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${follows.profileimg}" alt="無">
+		      			</div>
+		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${follows.email}</div>
+		      			<div style="margin-left: 35%; margin-top: -3%;">${follows.nickname}</div>
+		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${follows.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
+		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${follows.email}')"><i class="ni ni-fat-add"></i></button></div>
+	      			</div>
+	      		</c:forEach>
+		    </div>
+		    <div class="modal-footer">
+		    	<div class="pagination7">
+		           <i class="ni ni-bold-left fa-arrow-left"></i>
+		            <ol id="numbers7">
+		            <!-- 페이지네이션 번호들이 오는곳 -->
+		            </ol>
+		           <i class="ni ni-bold-right fa-arrow-right"></i>  
+	         	</div> 
+		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+		    </div>
+		  </div>
+		</div>
+	 </div>
+	</div>
+  <!-- 팔로잉 중인 회원 모달창 -->
+  <div class="modal fade" id="followingInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="flex-container8">	
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:800px;">
+		  <div class="modal-content" style="width:1200px; margin-left: -60%; margin-top: 40%;  margin-right: -25%;">
+		    <div class="modal-header">
+		      <h5 class="modal-title" id="exampleModalLabel">${roommember.nickname}님을 팔로잉한 회원정보<br></h5>
+		      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		      </button>
+		    </div>
+		    <div class="modal-body">
+		      	<table class="table align-items-center mb-0">
+		      		<tr><th>프로필</th><th>이메일</th><th>닉네임</th><th>room구경가기</th><th>팔로우</th></tr>
+		      	</table>
+	      		<c:forEach var="followings" items="${following}">
+	      			<div class="flex-item8">
+	      				<div id="img" style="margin-top:3%; margin-left: 2%;">
+		      				<img style="margin-left:1%; width:40px;height:40px" src="${path}/resource/img/Member/profileimg/${followings.profileimg}" alt="無">
+		      			</div>
+		      			<div style="margin-left: 10%; margin-top: -3.5%;" >${followings.email}</div>
+		      			<div style="margin-left: 35%; margin-top: -3%;">${followings.nickname}</div>
+		      			<div style="margin-left: 15%; margin-top: -4%;" class="align-middle text-center"><a href="communityMemberRoom.do?email=${followings.email}&loginEmail=${Login.email}" id="roomGo" class="btn btn-outline-primary mt-2"><i class="ni ni-shop"></i></a></div>
+		      			<div style="margin-left: 73%; margin-top: -7.5%;" class="align-middle text-center"><button id="followinsert" class="btn btn-outline-primary mt-2" onclick="followAddFun('${followings.email}')"><i class="ni ni-fat-add"></i></button></div>
+	      			</div>
+	      		</c:forEach>
+		    </div>
+		    <div class="modal-footer">
+		    	<div class="pagination8">
+		           <i class="ni ni-bold-left fa-arrow-left"></i>
+		            <ol id="numbers8">
+		            <!-- 페이지네이션 번호들이 오는곳 -->
+		            </ol>
+		           <i class="ni ni-bold-right fa-arrow-right"></i>  
+	         	</div> 
+		      <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+		    </div>
+		  </div>
+		</div>
+	 </div>
+	</div>
   <!--채팅 모달창  -->
   <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1335,7 +1298,7 @@
       data: {
         labels: ["Jan","Feb","Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: "커뮤니티 게시글 갯수",
+            label: "커뮤니티 게시글 개수",
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 2,
@@ -1470,14 +1433,13 @@
   // 페이지 처리
   //----------------------------------8개데이터가 나오면 next 숫자 창출력--------------------------------------
   	callPageSelector(".flex-item1","#numbers1",".pagination1 .fa-arrow-left",".pagination1 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item2","#numbers2",".pagination2 .fa-arrow-left",".pagination2 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item3","#numbers3",".pagination3 .fa-arrow-left",".pagination3 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item4","#numbers4",".pagination4 .fa-arrow-left",".pagination4 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item5","#numbers5",".pagination5 .fa-arrow-left",".pagination5 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item6","#numbers6",".pagination6 .fa-arrow-left",".pagination6 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item7","#numbers7",".pagination7 .fa-arrow-left",".pagination7 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
-  	callPageSelector(".flex-item8","#numbers8",".pagination8 .fa-arrow-left",".pagination8 .fa-arrow-right") //flex-item, pagination 값주기 (각각의 클래스명 넣기)
- 
+  	callPageSelector(".flex-item2","#numbers2",".pagination2 .fa-arrow-left",".pagination2 .fa-arrow-right")
+  	callPageSelector(".flex-item3","#numbers3",".pagination3 .fa-arrow-left",".pagination3 .fa-arrow-right")
+  	callPageSelector(".flex-item4","#numbers4",".pagination4 .fa-arrow-left",".pagination4 .fa-arrow-right")
+  	callPageSelector(".flex-item5","#numbers5",".pagination5 .fa-arrow-left",".pagination5 .fa-arrow-right")
+  	callPageSelector(".flex-item6","#numbers6",".pagination6 .fa-arrow-left",".pagination6 .fa-arrow-right")
+  	callPageSelector(".flex-item7","#numbers7",".pagination7 .fa-arrow-left",".pagination7 .fa-arrow-right")
+  	callPageSelector(".flex-item8","#numbers8",".pagination8 .fa-arrow-left",".pagination8 .fa-arrow-right")
   </script>
   
   <!-- Github buttons -->
