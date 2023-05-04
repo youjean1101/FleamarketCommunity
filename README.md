@@ -13,7 +13,7 @@ JAVA, Oracle, DBeaver, Eclipse, Spring MVC, MyBatis, Ajax, Bootstrap, JSP, Javas
 ```
 
 ### [ERD]
-![image](https://user-images.githubusercontent.com/114139279/236094815-fdd5070f-4697-42a1-92bf-305c51846cd2.png)
+![image](https://user-images.githubusercontent.com/114139279/236098480-0aff42ef-61bc-4168-98a4-59546d2cd131.png)
 
 
 ### [FlowChart]
