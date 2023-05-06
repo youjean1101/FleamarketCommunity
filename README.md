@@ -18,3 +18,6 @@ JAVA, Oracle, DBeaver, Eclipse, Spring MVC, MyBatis, Ajax, Bootstrap, JSP, Javas
 
 ### [FlowChart]
 ![image](https://user-images.githubusercontent.com/114139279/236095707-92b4137c-6da2-4b98-a22e-75be6a85adf2.png)
+
+## [프로젝트 발표용 PPT]
+[3조_콘티고_최종.pdf](https://github.com/youjean1101/FleamarketCommunity/files/11411407/3._._.pdf)
